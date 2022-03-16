@@ -1,0 +1,10 @@
+.card {
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  min-width: 300px;
+  padding: 0 1rem;
+}
+
+.card-title {
+  font-weight: bold;
+}

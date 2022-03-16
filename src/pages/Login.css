@@ -1,0 +1,9 @@
+.label-student {
+  margin-right: 1rem;
+}
+
+.login-button-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
