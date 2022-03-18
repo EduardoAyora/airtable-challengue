@@ -38,3 +38,41 @@ export const verifyUserAndFetchClassIds = (
       )
   })
 }
+
+export const fetchClasses = (classIds: string[]) => {
+  return new Promise((resolve, reject) => {
+    const classes: any[] = []
+    let query = ''
+    classIds.forEach((classId, index) => {
+      if (index < classIds.length - 1) {
+        query += `RECORD_ID() = '${classId}',`
+      } else {
+        query += `RECORD_ID() = '${classId}'`
+      }
+    })
+
+    airtableFetcher('Classes')
+      .select({
+        filterByFormula: `OR(${query})`,
+      })
+      .eachPage(
+        function page(records, fetchNextPage) {
+          records.forEach(function (record) {
+            classes.push({
+              name: record.get('Name'),
+              students: record.get('Students'),
+            })
+          })
+          fetchNextPage()
+        },
+        function done(err) {
+          if (err) {
+            console.error(err)
+            reject(err)
+            return
+          }
+          resolve(classes)
+        }
+      )
+  })
+}
