@@ -11,9 +11,11 @@ export default function Login() {
 
   const nameInputRef = useRef<HTMLInputElement>(null)
 
-  const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const studentName: string = event.currentTarget.value
-    login(studentName)
+  const handleLogin = () => {
+    if (nameInputRef.current) {
+      const studentName: string = nameInputRef.current.value
+      login(studentName)
+    }
   }
 
   return (
