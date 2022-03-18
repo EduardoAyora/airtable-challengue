@@ -1,6 +1,6 @@
 import airtableFetcher from '../../utils/airtableFetcher'
 
-export const verifyUserAndFetchCourseIds = (
+export const verifyUserAndFetchClassIds = (
   user: string
 ): Promise<{ userExists: boolean; classes?: string[] }> => {
   return new Promise((resolve, reject) => {

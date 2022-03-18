@@ -1,14 +1,15 @@
 import { Dispatch } from 'redux'
 import { ActionType } from '../action-types'
 import { Action } from '../actions/index'
-import { verifyUserAndFetchCourseIds } from './utils'
+import { verifyUserAndFetchClassIds } from './utils'
 
 export const login = (user: string) => {
   return async (dispatch: Dispatch<Action>) => {
     const userInfo: { userExists: boolean; classes?: string[] } =
-      await verifyUserAndFetchCourseIds(user)
+      await verifyUserAndFetchClassIds(user)
 
     if (userInfo.userExists) {
+
       dispatch({
         type: ActionType.LOGIN,
         user,
