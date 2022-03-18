@@ -1,36 +1,18 @@
 import { Dispatch } from 'redux'
 import { ActionType } from '../action-types'
 import { Action } from '../actions/index'
-import airtableFetcher from '../../utils/airtableFetcher'
+import { verifyUserExists } from './utils'
 
 export const login = (user: string) => {
-  return (dispatch: Dispatch<Action>) => {
-    const users: any[] = []
-    airtableFetcher('Students')
-      .select({
-        filterByFormula: `{Name} = '${user}'`,
-      })
-      .eachPage(
-        function page(records, fetchNextPage) {
-          records.forEach(function (record) {
-            users.push(record.get('Name'))
-          })
-          fetchNextPage()
-        },
-        function done(err) {
-          if (err) {
-            console.error(err)
-            return
-          }
+  return async (dispatch: Dispatch<Action>) => {
+    const userExist: boolean = await verifyUserExists(user)
 
-          if (users.length === 1) {
-            dispatch({
-              type: ActionType.LOGIN,
-              user: users[0],
-            })
-          }
-        }
-      )
+    if (userExist) {
+      dispatch({
+        type: ActionType.LOGIN,
+        user,
+      })
+    }
   }
 }
 
