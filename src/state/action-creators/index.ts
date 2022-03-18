@@ -3,7 +3,9 @@ import { ActionType } from '../action-types'
 import { Action } from '../actions/index'
 
 export const login = (user: string) => {
-  return (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<Action>) => {
+    // const datos = await fetchTestsData();
+
     dispatch({
       type: ActionType.LOGIN,
       user: user,
@@ -18,7 +20,9 @@ export const logout = () => {
 }
 
 export const fetchCourses = () => {
-  return (dispatch: Dispatch<Action>) => {
+  return async (dispatch: Dispatch<Action>) => {
+    // const datos = await fetchTestsData();
+
     dispatch({
       type: ActionType.FETCH_COURSES,
       courses: [],
