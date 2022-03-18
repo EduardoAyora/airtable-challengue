@@ -1,5 +1,5 @@
 export enum ActionType {
-  DEPOSIT = 'deposit',
-  WITHDRAW = 'withdraw',
-  BANKRUPT = 'bankrupt',
+  LOGIN = 'LOGIN',
+  LOGOUT = 'LOGOUT',
+  FETCH_COURSES = 'FETCH_COURSES',
 }
