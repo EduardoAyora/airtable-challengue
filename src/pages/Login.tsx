@@ -1,3 +1,4 @@
+import React from 'react'
 import { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -8,7 +9,12 @@ export default function Login() {
   const dispatch = useDispatch()
   const { login } = bindActionCreators(actionCreators, dispatch)
 
-  const nameInputRef = useRef()
+  const nameInputRef = useRef<HTMLInputElement>(null)
+
+  const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const studentName: string = event.currentTarget.value
+    login(studentName)
+  }
 
   return (
     <div className='view'>
@@ -18,7 +24,7 @@ export default function Login() {
           <input ref={nameInputRef} type='text' />
         </div>
         <div className='login-button-container'>
-          <button>Login</button>
+          <button onClick={handleLogin}>Login</button>
         </div>
       </div>
     </div>
