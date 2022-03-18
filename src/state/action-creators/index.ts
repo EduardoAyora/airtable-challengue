@@ -5,17 +5,21 @@ import { fetchClasses, verifyUserAndFetchClassIds } from './utils'
 
 export const login = (user: string) => {
   return async (dispatch: Dispatch<Action>) => {
-    const userInfo: { userExists: boolean; classes?: string[] } =
+    const userInfo: { userExists: boolean; classIds?: string[] } =
       await verifyUserAndFetchClassIds(user)
-    console.log(userInfo)
 
-    if (userInfo.userExists && userInfo.classes) {
-      const classes = await fetchClasses(userInfo.classes)
-      console.log(classes)
+    if (userInfo.userExists && userInfo.classIds) {
+      const classes = await fetchClasses(userInfo.classIds)
+      
 
       dispatch({
         type: ActionType.LOGIN,
         user,
+      })
+
+      dispatch({
+        type: ActionType.FETCH_COURSES,
+        courses: classes,
       })
     }
   }

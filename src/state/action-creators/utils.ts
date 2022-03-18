@@ -2,7 +2,7 @@ import airtableFetcher from '../../utils/airtableFetcher'
 
 export const verifyUserAndFetchClassIds = (
   user: string
-): Promise<{ userExists: boolean; classes?: string[] }> => {
+): Promise<{ userExists: boolean; classIds?: string[] }> => {
   return new Promise((resolve, reject) => {
     const users: any[] = []
     airtableFetcher('Students')
@@ -13,7 +13,7 @@ export const verifyUserAndFetchClassIds = (
         function page(records, fetchNextPage) {
           records.forEach(function (record) {
             users.push({
-              classes: record.get('Classes'),
+              classIds: record.get('Classes'),
             })
           })
           fetchNextPage()
@@ -27,7 +27,7 @@ export const verifyUserAndFetchClassIds = (
           if (users.length > 0) {
             resolve({
               userExists: true,
-              classes: users[0].classes,
+              classIds: users[0].classIds,
             })
           } else {
             resolve({
@@ -39,7 +39,7 @@ export const verifyUserAndFetchClassIds = (
   })
 }
 
-export const fetchClasses = (classIds: string[]) => {
+export const fetchClasses = (classIds: string[]): Promise<Course[]> => {
   return new Promise((resolve, reject) => {
     const classes: any[] = []
     let query = ''
