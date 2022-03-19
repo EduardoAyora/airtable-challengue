@@ -76,3 +76,53 @@ export const fetchClasses = (classIds: string[]): Promise<Course[]> => {
       )
   })
 }
+
+export const getStudentsMapper = (classes: Course[]) => {
+  return new Promise((resolve, reject) => {
+    const studentsMapper: any = {}
+    classes.forEach((singleClass) => {
+      singleClass.students.forEach((student) => {
+        studentsMapper[student] = ''
+      })
+    })
+
+    let query = ''
+    for (const studentId in studentsMapper) {
+      query += `RECORD_ID() = '${studentId}',`
+    }
+    query = query.substring(0, query.length - 1)
+
+    airtableFetcher('Students')
+      .select({
+        filterByFormula: `OR(${query})`,
+      })
+      .eachPage(
+        function page(records, fetchNextPage) {
+          records.forEach(function (record) {
+            studentsMapper[record.getId()] = record.get('Name')
+          })
+          fetchNextPage()
+        },
+        function done(err) {
+          if (err) {
+            console.error(err)
+            reject(err)
+            return
+          }
+          resolve(studentsMapper)
+        }
+      )
+  })
+}
+
+export const mapStudentsInClasses = (
+  classes: Course[],
+  studentsMapper: any
+): Course[] => {
+  classes.forEach((_, index) => {
+    classes[index].students = classes[index].students.map(
+      (studentId) => studentsMapper[studentId]
+    )
+  })
+  return classes
+}
