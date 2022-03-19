@@ -13,8 +13,12 @@ export default function Index() {
               <p className='card-title'>Name</p>
               <p>{name}</p>
               <p className='card-title'>Students</p>
-              <p>Joe, Jenny</p>
-              <p>{students}</p>
+              <p>
+                {students.map(
+                  (student, index) =>
+                    `${student}${index !== students.length - 1 && ', '}`
+                )}
+              </p>
             </div>
           </div>
         ))}
