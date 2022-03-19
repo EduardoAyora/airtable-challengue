@@ -1,11 +1,20 @@
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../state'
 import './Index.css'
 
 export default function Index() {
   const classes: Course[] = useSelector((state: GlobalState) => state.courses)
 
+  const dispatch = useDispatch()
+  const { logout } = bindActionCreators(actionCreators, dispatch)
+
   return (
     <div className='view'>
+      <button onClick={logout} className='logout-button'>
+        Logout
+      </button>
       <div>
         {classes.map(({ name, students }, index) => (
           <div key={index} className='card'>

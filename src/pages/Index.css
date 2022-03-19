@@ -9,3 +9,9 @@
 .card-title {
   font-weight: bold;
 }
+
+.logout-button {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+}
