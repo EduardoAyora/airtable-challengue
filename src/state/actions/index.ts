@@ -5,6 +5,10 @@ interface LoginAction {
   user: string
 }
 
+interface LoadAction {
+  type: ActionType.LOAD
+}
+
 interface LogoutAction {
   type: ActionType.LOGOUT
 }
@@ -14,4 +18,8 @@ interface FetchCoursesAction {
   courses: Course[]
 }
 
-export type Action = LoginAction | LogoutAction | FetchCoursesAction
+export type Action =
+  | LoginAction
+  | LogoutAction
+  | FetchCoursesAction
+  | LoadAction

@@ -10,6 +10,10 @@ import {
 
 export const login = (user: string) => {
   return async (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.LOAD,
+    })
+
     const userInfo: { userExists: boolean; classIds?: string[] } =
       await verifyUserAndFetchClassIds(user)
 
@@ -26,6 +30,10 @@ export const login = (user: string) => {
       dispatch({
         type: ActionType.FETCH_COURSES,
         courses: classes,
+      })
+    } else {
+      dispatch({
+        type: ActionType.LOGOUT,
       })
     }
   }

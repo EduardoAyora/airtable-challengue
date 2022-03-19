@@ -3,6 +3,7 @@ import { Action } from '../actions'
 
 const initialState: GlobalState = {
   user: null,
+  loading: false,
   courses: [],
 }
 
@@ -15,11 +16,18 @@ const reducer = (
       return {
         ...state,
         user: action.user,
+        loading: false,
       }
     case ActionType.LOGOUT:
       return {
         user: null,
         courses: [],
+        loading: false,
+      }
+    case ActionType.LOAD:
+      return {
+        ...state,
+        loading: true,
       }
     case ActionType.FETCH_COURSES:
       return {
