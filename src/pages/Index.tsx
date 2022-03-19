@@ -25,7 +25,7 @@ export default function Index() {
               <p>
                 {students.map(
                   (student, index) =>
-                    `${student}${index !== students.length - 1 && ', '}`
+                    `${student}${index !== students.length - 1 ? ', ' : ''}`
                 )}
               </p>
             </div>
