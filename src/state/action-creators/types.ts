@@ -1,8 +1,8 @@
-enum ActionType {
-  LOGIN = 'LOGIN',
-  LOGOUT = 'LOGOUT',
-  FETCH_COURSES = 'FETCH_COURSES',
-  LOAD = 'LOAD',
+export enum ActionType {
+  LOGIN,
+  LOGOUT,
+  FETCH_COURSES,
+  LOAD,
 }
 
 interface LoginAction {
@@ -23,4 +23,4 @@ interface FetchCoursesAction {
   courses: Course[]
 }
 
-type Action = LoginAction | LogoutAction | FetchCoursesAction | LoadAction
+export type Action = LoginAction | LogoutAction | FetchCoursesAction | LoadAction

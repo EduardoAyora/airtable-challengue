@@ -1,3 +1,5 @@
+import { Action, ActionType } from '../action-creators/types'
+
 const initialState: GlobalState = {
   user: null,
   loading: false,

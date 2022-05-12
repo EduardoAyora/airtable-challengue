@@ -1,6 +1,5 @@
 import Login from './pages/Login'
 import Index from './pages/Index'
-import './App.css'
 import { useSelector } from 'react-redux'
 
 function App() {
