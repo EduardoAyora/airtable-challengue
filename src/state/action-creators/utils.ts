@@ -1,4 +1,4 @@
-import airtableFetcher from '../../utils/airtableFetcher'
+import airtableFetcher from '../../lib/airtableFetcher'
 
 export const verifyUserAndFetchClassIds = (
   user: string

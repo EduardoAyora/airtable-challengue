@@ -1,6 +1,3 @@
-import { ActionType } from '../action-types/index'
-import { Action } from '../actions'
-
 const initialState: GlobalState = {
   user: null,
   loading: false,

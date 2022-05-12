@@ -1,4 +1,9 @@
-import { ActionType } from '../action-types/index'
+enum ActionType {
+  LOGIN = 'LOGIN',
+  LOGOUT = 'LOGOUT',
+  FETCH_COURSES = 'FETCH_COURSES',
+  LOAD = 'LOAD',
+}
 
 interface LoginAction {
   type: ActionType.LOGIN
@@ -18,8 +23,4 @@ interface FetchCoursesAction {
   courses: Course[]
 }
 
-export type Action =
-  | LoginAction
-  | LogoutAction
-  | FetchCoursesAction
-  | LoadAction
+type Action = LoginAction | LogoutAction | FetchCoursesAction | LoadAction
