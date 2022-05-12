@@ -1,10 +1,12 @@
 import airtableFetcher from '../../lib/airtableFetcher'
+import { FieldSet } from 'airtable'
 
 export const verifyUserAndFetchClassIds = (
   user: string
 ): Promise<{ userExists: boolean; classIds?: string[] }> => {
   return new Promise((resolve, reject) => {
-    const users: any[] = []
+    const users: FieldSet[] = []
+
     airtableFetcher('Students')
       .select({
         filterByFormula: `{Name} = '${user}'`,
@@ -27,7 +29,7 @@ export const verifyUserAndFetchClassIds = (
           if (users.length > 0) {
             resolve({
               userExists: true,
-              classIds: users[0].classIds,
+              classIds: users[0].classIds as string[],
             })
           } else {
             resolve({
