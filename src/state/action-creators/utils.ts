@@ -1,11 +1,13 @@
 import airtableFetcher from '../../lib/airtableFetcher'
-import { FieldSet } from 'airtable'
 
 export const verifyUserAndFetchClassIds = (
   user: string
 ): Promise<{ userExists: boolean; classIds?: string[] }> => {
   return new Promise((resolve, reject) => {
-    const users: FieldSet[] = []
+    type User = {
+      classesIds: string[]
+    }
+    const users: User[] = []
 
     airtableFetcher('Students')
       .select({
@@ -15,7 +17,7 @@ export const verifyUserAndFetchClassIds = (
         function page(records, fetchNextPage) {
           records.forEach(function (record) {
             users.push({
-              classIds: record.get('Classes'),
+              classesIds: record.get('Classes') as string[],
             })
           })
           fetchNextPage()
@@ -29,7 +31,7 @@ export const verifyUserAndFetchClassIds = (
           if (users.length > 0) {
             resolve({
               userExists: true,
-              classIds: users[0].classIds as string[],
+              classIds: users[0].classesIds,
             })
           } else {
             resolve({
