@@ -51,9 +51,7 @@ export const fetchClasses = (classIds: string[]): Promise<Course[]> => {
     }
     const classes: Class[] = []
     const query: string = classIds
-      .map((classId) => {
-        return `RECORD_ID() = '${classId}'`
-      })
+      .map((classId) => `RECORD_ID() = '${classId}'`)
       .join(',')
 
     airtableFetcher('Classes')
@@ -109,11 +107,9 @@ export const getStudentsMapper = (
       {}
     )
 
-    let query = ''
-    for (const studentId in studentsMapper) {
-      query += `RECORD_ID() = '${studentId}',`
-    }
-    query = query.substring(0, query.length - 1)
+    const query: string = Object.keys(studentsMapper)
+      .map((studentId) => `RECORD_ID() = '${studentId}'`)
+      .join(',')
 
     airtableFetcher('Students')
       .select({
