@@ -18,9 +18,9 @@ export const login = (user: string) => {
       await verifyUserAndFetchClassIds(user)
 
     if (userInfo.userExists && userInfo.classIds) {
-      let classes: Course[] = await fetchClasses(userInfo.classIds)
+      const classes: Course[] = await fetchClasses(userInfo.classIds)
       const studentsMapper = await getStudentsMapper(classes)
-      classes = mapStudentsInClasses(classes, studentsMapper)
+      const mappedClasses = mapStudentsInClasses(classes, studentsMapper)
 
       dispatch({
         type: ActionType.LOGIN,
@@ -29,7 +29,7 @@ export const login = (user: string) => {
 
       dispatch({
         type: ActionType.FETCH_COURSES,
-        courses: classes,
+        courses: mappedClasses,
       })
     } else {
       dispatch({
