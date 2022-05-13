@@ -45,7 +45,11 @@ export const verifyUserAndFetchClassIds = (
 
 export const fetchClasses = (classIds: string[]): Promise<Course[]> => {
   return new Promise((resolve, reject) => {
-    const classes: any[] = []
+    type Class = {
+      name: string
+      students: string[]
+    }
+    const classes: Class[] = []
     let query = ''
     classIds.forEach((classId, index) => {
       if (index < classIds.length - 1) {
@@ -63,8 +67,8 @@ export const fetchClasses = (classIds: string[]): Promise<Course[]> => {
         function page(records, fetchNextPage) {
           records.forEach(function (record) {
             classes.push({
-              name: record.get('Name'),
-              students: record.get('Students'),
+              name: record.get('Name') as string,
+              students: record.get('Students') as string[],
             })
           })
           fetchNextPage()
@@ -81,14 +85,32 @@ export const fetchClasses = (classIds: string[]): Promise<Course[]> => {
   })
 }
 
-export const getStudentsMapper = (classes: Course[]) => {
+type StudentsMapperRecords = {
+  [recordId: string]: string
+}
+
+export const getStudentsMapper = (
+  classes: Course[]
+): Promise<StudentsMapperRecords> => {
   return new Promise((resolve, reject) => {
-    const studentsMapper: any = {}
-    classes.forEach((singleClass) => {
-      singleClass.students.forEach((student) => {
-        studentsMapper[student] = ''
-      })
-    })
+    const studentsMapper: StudentsMapperRecords = classes.reduce(
+      (prev, singleClass) => {
+        const studentsInSingleClass = singleClass.students.reduce(
+          (prev, singleStudent) => {
+            return {
+              ...prev,
+              [singleStudent]: '',
+            }
+          },
+          {}
+        )
+        return {
+          ...prev,
+          ...studentsInSingleClass,
+        }
+      },
+      {}
+    )
 
     let query = ''
     for (const studentId in studentsMapper) {
@@ -103,7 +125,7 @@ export const getStudentsMapper = (classes: Course[]) => {
       .eachPage(
         function page(records, fetchNextPage) {
           records.forEach(function (record) {
-            studentsMapper[record.getId()] = record.get('Name')
+            studentsMapper[record.getId()] = record.get('Name') as string
           })
           fetchNextPage()
         },
@@ -121,7 +143,7 @@ export const getStudentsMapper = (classes: Course[]) => {
 
 export const mapStudentsInClasses = (
   classes: Course[],
-  studentsMapper: any
+  studentsMapper: StudentsMapperRecords
 ): Course[] => {
   classes.forEach((_, index) => {
     classes[index].students = classes[index].students.map(
