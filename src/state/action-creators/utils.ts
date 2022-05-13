@@ -50,14 +50,11 @@ export const fetchClasses = (classIds: string[]): Promise<Course[]> => {
       students: string[]
     }
     const classes: Class[] = []
-    let query = ''
-    classIds.forEach((classId, index) => {
-      if (index < classIds.length - 1) {
-        query += `RECORD_ID() = '${classId}',`
-      } else {
-        query += `RECORD_ID() = '${classId}'`
-      }
-    })
+    const query: string = classIds
+      .map((classId) => {
+        return `RECORD_ID() = '${classId}'`
+      })
+      .join(',')
 
     airtableFetcher('Classes')
       .select({
